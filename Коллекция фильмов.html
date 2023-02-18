@@ -1,0 +1,418 @@
+<html lang="en">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="UTF-8">
+		<title>Моя коллекция фильмов</title>
+	</head>
+	<body>
+        <script>
+            let x=200;
+        </script>
+        <style>
+            body{
+                background-color: rgb(172, 91, 105);
+                font-family: cursive;
+                
+            }
+            
+            
+            .main{
+                width: 1000px;
+                height: 1000px;
+                display: flex;
+                flex-wrap: wrap;
+                
+            }
+            .a{ 
+                border: 2px dashed; 
+                background-color: rgb(73, 11, 11);
+                color: white;
+                width: 250px; 
+                height: 510px;
+                margin: 10px;
+                padding: 5px;
+                font-display: flex;
+                justify-content: center;
+                align-items: center;
+                float: left;
+            }
+            .OurFilter{
+                padding-left: 10px;
+            }
+            .filter{
+                display: inline-block;
+                color: #fff;
+                background: linear-gradient(to bottom, #720303, #580101);
+                font-weight: 100;
+                padding: 4px;
+                border-radius: 100px;
+                border: 3px solid transparent;
+                text-decoration: none;
+                
+            }
+            .button{
+                margin-top: -40px;
+                margin-left: -3px;
+                background-color: rgb(0,0,0,0);
+                width: 116px;
+                height: 20px;
+            }
+            .rating{
+                width: 40px;
+            }
+            .X{
+                float: right;
+                padding-right: 5px;
+                background-color: white;
+            }
+            .title{
+                padding-left: 5px;
+            }
+        </style>
+        <h1 class="title">Моя коллекция фильмов</h1>
+		<div id="root"></div>
+        <div class="main">
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <script type="text/babel">
+			// START CODE
+            let cur=5;
+            class TodoItem extends React.Component {
+                handleCompleteChange = () => {
+                    const name = this.props.name;
+                    const genre = this.props.genre;
+                    const year = this.props.year;
+                    let id = this.props.id;
+                    const isComplete = this.props.isComplete;
+                    const onCompleteChange = this.props.onCompleteChange;
+
+                    const newIsComplete = !isComplete;
+
+                    const description = this.props.description;
+                    let rating = this.props.rating;
+
+                    onCompleteChange(name, newIsComplete, id);
+                };               
+
+                onRemove =() =>{
+                    const remove = this.props.remove;
+                    const id = this.props.id;
+                    remove(id);
+                }
+                render() {
+                    const name = this.props.name;   
+                    const genre = this.props.genre;
+                    const year = this.props.year;
+                    let id = this.props.id;
+                    const isComplete = this.props.isComplete;
+                    const description = this.props.description;
+                    let rating = this.props.rating;    
+                                 
+
+                    return (
+                        <div class="a">
+                            <button class="X" onClick={this.onRemove}>X</button>
+                            <h1 style={{height: '110'}}>{name}</h1>
+                            <h5 style={{height: '10'}}>{genre}</h5>
+                            <h4 style={{height: '10'}}>{year}</h4>
+                            <h6 style={{height: '180'}}>{description}</h6>
+                            {isComplete === true && (<h5 style={{ color: 'green' }}>Просмотрено</h5>)}
+                            {isComplete === false && (<h5 style={{ color: 'red' }}>Не просмотрено</h5>)}
+                            <div style={{height: '1'}}><button class="button" onClick={this.handleCompleteChange}/></div>
+                            <h4 style={{height: '5'}}>Мой рейтинг: <input class="rating" type="number" value={rating} min='0' max='10' />/10</h4>
+                        </div>
+                    );
+                }
+            }
+
+			class TodoList extends React.Component {
+				state = {
+					todoItems: 
+                    [
+                        { 
+                        id: 0,
+                        name: 'Человек-паук', 
+                        genre: 'Фантастика', 
+                        year: '2002',
+                        description: 'Питер Паркер – обыкновенный школьник. Однажды он отправился с классом на экскурсию, где его кусает странный паук-мутант. Через время парень почувствовал в себе нечеловеческую силу и ловкость в движении, а главное – умение лазать по стенам и метать стальную паутину. Свои способности он направляет на защиту слабых. Так Питер становится настоящим супергероем по имени Человек-паук, который помогает людям и борется с преступностью.', 
+                        isComplete: true,
+                        rating: '10',
+                        },
+                        {
+                        id: 1,
+                        name: 'Человек-паук 2', 
+                        genre: 'Фантастика', 
+                        year: '2004',
+                        description: 'Питер Паркер балансирует на грани двух своих жизней: супергероя Человека-паука и обычного студента колледжа. Его отношения со всеми, кто ему дорог, в опасности или зашли в тупик. А жизнь приготовила ему новое испытание. Он должен использовать все свои суперспособности, чтобы одолеть жестокого безумца доктора Отто Октавиуса.',
+                        isComplete: true,
+                        rating: '9'
+                        },
+                        {
+                        id: 2,
+                        name: 'Человек-паук 3: Враг в отражении', 
+                        genre: 'Фантастика', 
+                        year: '2007',
+                        description: 'Со времен последних событий прошло пять лет. Питер прекрасно научился жить несколькими жизнями. Он хорошо учится, Нью-Йорк признал его героем, он даже намеревается сделать предложение Мэри Джейн. Но Питеру Паркеру, обладающему сверхспособностями Человека-паука, придётся вскоре вновь вступить в схватку с новыми противниками. Но главным врагом Человека-паука на этот раз станет… сам Человек-паук. Как долго человек может сражаться с тьмой, пока не обнаружит её внутри себя?',
+                        isComplete: true,
+                        rating: '10'
+                        },
+                        {
+                        id: 3,
+                        name: 'Звонок', 
+                        genre: 'Ужасы', 
+                        year: '2002',
+                        description: 'Телефонный звонок раздаётся после просмотра некой загадочной видеокассеты. Жертве даётся ровно семь дней, а после следует неминуемая смерть. Журналистка Рэйчел расследует загадочные смерти молодых людей, и случайно кассета-убийца попадает в руки к её маленькому сыну, над которым теперь нависает смертельная угроза. У женщины есть только семь дней, чтобы разобраться в происходящем и спасти своего мальчика.',
+                        isComplete: true,
+                        rating: '7'
+                        },
+                        {
+                        id: 4,
+                        name: 'Лжец, лжец', 
+                        genre: 'Комедия', 
+                        year: '1997',
+                        description: 'Флетчер Рид - блестящий адвокат и неисправимый лжец, который вынужден говорить правду в течение суток: в день рождения его сына чудесным образом исполняется заветное желание мальчика - чтобы папа говорил только правду. Удачливый преуспевающий адвокат Флетчер Рид неожиданно терпит полный крах, когда обнаруживается, что величайшее его достояние - его красноречие, его «язык без костей» - может стать вдруг величайшей помехой в жизни.',
+                        isComplete: false,
+                        rating: ''
+                        }
+                    ],
+                    inputId: '',
+                    inputValue: '',
+                    inputGenre: '',
+                    inputYear: '',
+                    inputDescription: '',
+                    checked: false,
+                    inputRating: '',
+                    filter: 'all',
+                    filterGenre: 'all',
+				};
+
+                remove = (id) =>{
+                    const todo = this.state.todoItems;
+                    const todoNew = todo.filter((todo)=>{
+                        if(id!=todo.id) {return true}
+                        else {return false};
+                    });
+                    this.setState({
+                        todoItems: todoNew,
+                    });
+
+                }
+				handleCompleteChange = (todoName, newIsComplete, id) => {
+					const oldTodoItems = this.state.todoItems;
+                    const newTodoItems = oldTodoItems.map((todoItem) => {
+                        const idi = todoItem.id;
+                        const name = todoItem.name;
+                        const genre = todoItem.genre;
+                        const year = todoItem.year;
+                        const description = todoItem.description;
+                        const isComplete = todoItem.isComplete;
+                        let rating = todoItem.rating;
+
+                        if (name === todoName && idi === id) {
+                            return {
+                                id: id,
+                                name: name,
+                                genre: genre,
+                                year: year,
+                                description: description,
+                                isComplete: newIsComplete,
+                                rating: rating,
+                            };
+                        }
+
+                        return {
+                            id: idi,
+                            name: name,
+                            genre: genre,
+                            year: year,
+                            description: description,
+                            isComplete: isComplete,
+                            rating: rating,
+                        };
+                    });
+
+                    this.setState({ todoItems: newTodoItems });
+				}
+
+                setInputValue = (event) => {
+                    const newInputValue = event.target.value;
+            
+                    this.setState({ inputValue: newInputValue });
+                }
+
+                setInputGenre = (event) => {
+                    const newInputGenre = event.target.value;
+
+                    this.setState({ inputGenre: newInputGenre });
+                }
+                setInputYear = (event) => {
+                    const newInputYear = event.target.value;
+
+                    this.setState({ inputYear: newInputYear });
+                }
+                setInputDescription = (event) => {
+                    const newInputDescription = event.target.value;
+
+                    this.setState({ inputDescription: newInputDescription });
+                }
+                ////////
+                setIsComplete = (event) => {
+                    const newIsComplete = event.target.newIsComplete;
+
+                    this.setState({ isComplete: newIsComplete });
+                }
+                setChecked = (event) => {
+                    const newChecked = event.target.checked;
+            
+                    this.setState({ checked: newChecked });
+                }
+                setInputRating = (event) => {
+                    let newInputRating = event.target.value;
+            
+                    this.setState({ inputRating: newInputRating });
+                }
+        
+                addNewTodo = () => {
+                    const inputValue = this.state.inputValue;
+                    const inputGenre = this.state.inputGenre;
+                    const inputYear = this.state.inputYear;
+                    let inputId = this.state.inputId;
+                    const inputDescription = this.state.inputDescription;
+                    const checked = this.state.checked;
+                    let inputRating = this.state.inputRating;
+                    const oldTodoItems = this.state.todoItems;
+
+                    const newTodo = {
+                        id: inputId+cur,
+                        name: inputValue,
+                        genre: inputGenre,
+                        year: inputYear,
+                        description: inputDescription,
+                        isComplete: checked,
+                        rating: inputRating,
+                    };
+                    cur++;
+                    const newTodoItems = [];
+
+                    for (let i = 0; i < oldTodoItems.length; i++) {
+                        newTodoItems.push(oldTodoItems[i]);
+                    }
+                    newTodoItems.push(newTodo);
+
+                    this.setState({
+                        todoItems: newTodoItems,
+                        inputValue: '',
+                        inputId: '',
+                        inputGenre: '',
+                        inputYear: '',
+                        inputDescription: '',
+                        checked: checked,
+                        rating: '',
+                    });
+                }
+
+                showAll = () => {
+                    this.setState({ filter: 'all' });
+                    this.setState({filterGenre: 'all'})
+                }
+
+                showCompleted = () => {
+                    this.setState({ filter: 'completed' });
+                }
+
+                showNotCompleted = () => {
+                    this.setState({ filter: 'not-completed' });
+                }
+				render(){
+                    const allTodoItems = this.state.todoItems;
+                    const inputValue = this.state.inputValue;
+                    const inputGenre = this.state.inputGenre;
+                    const inputYear = this.state.inputYear;
+                    let inputId = this.state.inputId;
+                    const inputDescription = this.state.inputDescription;
+                    const checked = this.state.checked;
+                    let inputRating = this.state.inputRating;
+                    const filter = this.state.filter;
+                    const filterGenre = this.state.filterGenre;
+
+                    let todoItems;
+
+                    if (filter === 'all') {
+                        todoItems = allTodoItems;
+                    } else if (filter === 'completed') {
+                        todoItems = allTodoItems.filter((item) => {
+                            return item.isComplete === true;
+                        });
+                    } else if (filter === 'not-completed') {
+                        todoItems = allTodoItems.filter((item) => {
+                            return item.isComplete === false;
+                        });
+                    }
+                    
+
+                    return (
+                        <div>
+                            <div class="OurFilter">
+                                <h2 style={{color: 'white', padding: '5'}}>Фильтры:</h2>
+                                <button class="filter" onClick={this.showAll}>Показать Все</button>
+                                <button class="filter" onClick={this.showCompleted}>Показать Просмотренные</button>
+                                <button class="filter" onClick={this.showNotCompleted}>Показать Не просмотренные</button>
+                            </div>
+                            <div>
+                                {todoItems.map((item) => {
+                                    const isComplete = item.isComplete;
+                                    const name = item.name;
+                                    const genre = item.genre;
+                                    const year = item.year;
+                                    let id = item.id;
+                                    const description = item.description;
+                                    let rating = item.rating;
+
+                                    return (
+                                        <TodoItem
+                                            key={name}
+                                            name={name}
+                                            genre={genre}
+                                            year={year}
+                                            id={id}
+                                            description={description}
+                                            isComplete={isComplete}
+                                            onCompleteChange={this.handleCompleteChange}
+                                            rating={rating}
+                                            remove={this.remove}
+                                        />
+                                    );
+                                })}
+                            </div>
+                            <div class="a">
+                                <h2>Добавить новый фильм:</h2>
+                                <h3>Название: <input type="text" value={inputValue} onChange={this.setInputValue}/></h3>
+                                <h3>Жанр: <select value={inputGenre} onChange={this.setInputGenre}>
+                                    <option id="1">Выберите жанр</option>
+                                    <option id="2">Комедия</option>
+                                    <option id="3">Драма</option>
+                                    <option id="4">Фантастика</option>
+                                    <option id="5">Ужасы</option>
+                                    <option id="6">Детектив</option>
+                                </select></h3>
+                                <h3>Год: <input type="number" value={inputYear} onChange={this.setInputYear} min='1940' max='2022' /></h3>
+                                <h4>Описание: <input type="text" value={inputDescription} onChange={this.setInputDescription} max='500' /></h4>
+                                <h3>Просмотрен: <input type="checkbox" checked={checked} onChange={this.setChecked}/></h3>
+                                <h4>Мой рейтинг: <input type="number" value={inputRating} onChange={this.setInputRating} min='0' max='10' />/10</h4>
+                                <button onClick={this.addNewTodo}>Добавить</button>
+                            </div>
+                        </div>
+                    );
+				}
+			}
+            class Form extends React.Component {
+
+            }
+			ReactDOM.render(<TodoList />, document.getElementById('root'));
+			// END CODE
+		</script>
+        </div>
+    </body>
+</html>
